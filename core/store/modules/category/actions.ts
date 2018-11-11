@@ -3,15 +3,15 @@ import { ActionTree } from 'vuex'
 import * as types from '../../mutation-types'
 import { quickSearchByQuery } from '../../lib/search'
 import { entityKeyName } from '../../lib/entities'
-import rootStore from '../../'
+import rootStore from '@vue-storefront/store'
 import i18n from '@vue-storefront/i18n'
 import chunk from 'lodash-es/chunk'
 import trim from 'lodash-es/trim'
 import toString from 'lodash-es/toString'
-import { optionLabel } from '../attribute/helpers'
+import { optionLabel } from '@vue-storefront/core/modules/product/helpers/optionLabel'
 import RootState from '../../types/RootState'
 import CategoryState from './types/CategoryState'
-import SearchQuery from 'core/store/lib/search/searchQuery'
+import SearchQuery from '@vue-storefront/store/lib/search/searchQuery'
 import { currentStoreView } from '@vue-storefront/store/lib/multistore'
 
 const actions: ActionTree<CategoryState, RootState> = {
@@ -86,7 +86,7 @@ const actions: ActionTree<CategoryState, RootState> = {
         }
         if (populateRequestCacheTags && mainCategory && Vue.prototype.$ssrRequestContext) {
           Vue.prototype.$ssrRequestContext.output.cacheTags.add(`C${mainCategory.id}`)
-        }        
+        }
         if (setCurrentCategoryPath) {
           let currentPath = []
           let recurCatFinder = (category) => {
@@ -115,8 +115,10 @@ const actions: ActionTree<CategoryState, RootState> = {
               resolve(mainCategory)
             }
           }
-          if (typeof mainCategory !== 'undefined' && mainCategory.parent_id) {
+          if (typeof mainCategory !== 'undefined') {
             recurCatFinder(mainCategory) // TODO: Store breadcrumbs in IndexedDb for further usage to optimize speed?
+          } else {
+            reject(new Error('Category query returned empty result ' + key + ' = ' + value))
           }
         } else {
           Vue.prototype.$bus.$emit('category-after-single', { category: mainCategory })
@@ -191,10 +193,10 @@ const actions: ActionTree<CategoryState, RootState> = {
 
       let subloaders = []
       if (!res || (res.noresults)) {
-        Vue.prototype.$bus.$emit('notification', {
+        rootStore.dispatch('notification/spawnNotification', {
           type: 'warning',
           message: i18n.t('No products synchronized for this category. Please come back while online!'),
-          action1: { label: i18n.t('OK'), action: 'close' }
+          action1: { label: i18n.t('OK') }
         })
         if (!append) rootStore.dispatch('product/reset')
         rootStore.state.product.list = { items: [] } // no products to show TODO: refactor to rootStore.state.category.reset() and rootStore.state.product.reset()
@@ -272,10 +274,10 @@ const actions: ActionTree<CategoryState, RootState> = {
       return subloaders
     }).catch((err) => {
       console.error(err)
-      Vue.prototype.$bus.$emit('notification', {
+      rootStore.dispatch('notification/spawnNotification', {
         type: 'warning',
         message: i18n.t('No products synchronized for this category. Please come back while online!'),
-        action1: { label: i18n.t('OK'), action: 'close' }
+        action1: { label: i18n.t('OK') }
       })
     })
 
@@ -302,6 +304,10 @@ const actions: ActionTree<CategoryState, RootState> = {
       })
     }
     return productPromise
+  },
+
+  resetFilters (context) {
+    context.commit(types.CATEGORY_REMOVE_FILTERS)
   }
 }
 
