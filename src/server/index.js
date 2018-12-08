@@ -5,13 +5,13 @@ module.exports.registerUserServerRoutes = (expressApp) => {
 
 // Use can use dynamic config by using this function below:
 // (Needs to return a Promise)
-// module.exports.configProvider = (req) => {
-//   const axios = require('axios')
-//   return new Promise((resolve, reject) => axios.get('myapi.com/config', {
-//     params: {
-//       domain: req.headers.host
-//     }
-//   }).then(res => {
-//     resolve(res.data)
-//   }).catch(error => reject(error)))
-// }
+module.exports.configProvider = (req) => {
+  const axios = require('axios')
+  return new Promise((resolve, reject) => axios.get('http://api.store.crelatio.test/config', {
+    params: {
+      fqdn: req.headers.host
+    }
+  }).then(res => {
+    resolve(res.data)
+  }).catch(error => reject(error)))
+}
