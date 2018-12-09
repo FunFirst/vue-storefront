@@ -46,7 +46,7 @@
             </div>
           </div>
           <div class="col-xs-2 col-md-6 center-xs">
-            <logo width="36px" height="41px"/>
+            <logo width="auto" height="41px"/>
           </div>
           <div class="col-xs-5 col-md-3 end-xs">
             <div>
@@ -68,7 +68,6 @@
 <script>
 import { mapState } from 'vuex'
 import CurrentPage from 'theme/mixins/currentPage'
-import Header from '@vue-storefront/core/components/blocks/Header/Header'
 import AccountIcon from 'theme/components/core/blocks/Header/AccountIcon'
 import CompareIcon from 'theme/components/core/blocks/Header/CompareIcon'
 import HamburgerIcon from 'theme/components/core/blocks/Header/HamburgerIcon'
@@ -79,6 +78,7 @@ import SearchIcon from 'theme/components/core/blocks/Header/SearchIcon'
 import WishlistIcon from 'theme/components/core/blocks/Header/WishlistIcon'
 
 export default {
+  name: 'Header',
   components: {
     AccountIcon,
     CompareIcon,
@@ -89,7 +89,7 @@ export default {
     SearchIcon,
     WishlistIcon
   },
-  mixins: [Header, CurrentPage],
+  mixins: [CurrentPage],
   data () {
     return {
       navVisible: true,
