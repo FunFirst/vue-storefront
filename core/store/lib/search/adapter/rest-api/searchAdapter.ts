@@ -75,6 +75,8 @@ export class SearchAdapter {
     url = url + '/' + encodeURIComponent(Request.index) + '/' + encodeURIComponent(Request.type) + '/_search'
     url = url + '?' + buildURLQuery(httpQuery)
 
+    console.debug('Fetching ', url, RESTQueryBody)
+
     return fetch(url, { method: 'POST',
       mode: 'cors',
       headers: {

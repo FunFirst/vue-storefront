@@ -19,7 +19,7 @@
           </nav>
         </div>
         <div class="static-content h4 lh35 col-sm-9">
-          <static-content :file="$props.page"/>
+          <static-content :file="$props.page" :content="currentPage.content"/>
         </div>
       </div>
     </div>
@@ -62,7 +62,33 @@ export default {
         { title: i18n.t('Return policy'), link: '/returns' },
         { title: i18n.t('Privacy policy'), link: '/privacy' },
         { title: i18n.t('Contact us'), link: '/contact' }
-      ]
+      ],
+      pages: null
+    }
+  },
+  mounted () {
+    this.loadContent()
+  },
+  methods: {
+    loadContent (file = this.file) {
+      // this.staticLoaded = false
+      // this.$options.components.static = require('../../resource/' + file + '.md').default
+      this.$store.dispatch('sync/execute', { url: 'http://fdb07f5e.api.store.crelatio.test/api/vsbridge/pages', // sync the cart
+        payload: {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+          mode: 'cors'
+        },
+        callback_event: 'static-pages-loaded'
+      }, { root: true }).then(res => {
+        this.pages = res.data.data
+      })
+      // this.staticLoaded = 'static'
+    }
+  },
+  computed: {
+    currentPage () {
+      return Array.isArray(this.pages) && this.pages.find(page => page.slug === this.$route.params.slug)
     }
   }
 }
