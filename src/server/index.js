@@ -19,7 +19,7 @@ module.exports.configProvider = (req) => {
   const axios = require('axios')
   return new Promise((resolve, reject) => axios.get('https://api.myff.store/config', {
     params: {
-      fqdn: req.headers.origin
+      fqdn: req.get('origin')
     }
   }).then(res => {
     console.log('Success ->', res)
