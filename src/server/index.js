@@ -22,6 +22,10 @@ module.exports.configProvider = (req) => {
       fqdn: req.headers.host
     }
   }).then(res => {
+    console.log('Success ->', res)
     resolve(res.data)
-  }).catch(error => reject(error)))
+  }).catch(error => {
+    console.log('Error ->', error)
+    reject(error)
+  }))
 }
