@@ -17,16 +17,13 @@ module.exports.registerUserServerRoutes = (expressApp) => {
 // }
 module.exports.configProvider = (req) => {
   const axios = require('axios')
-  console.log('Request ->', req.headers, req.connection, req.connection.remoteAddress)
   return new Promise((resolve, reject) => axios.get('https://api.myff.store/config', {
     params: {
-      fqdn: req.headers['x-forwarded-for']
+      fqdn: req.headers.host
     }
   }).then(res => {
-    console.log('Success ->', res)
     resolve(res.data)
   }).catch(error => {
-    console.log('Error ->', error)
     reject(error)
   }))
 }
