@@ -17,7 +17,7 @@ module.exports.registerUserServerRoutes = (expressApp) => {
 // }
 module.exports.configProvider = (req) => {
   const axios = require('axios')
-  return new Promise((resolve, reject) => axios.get('http://api.store.crelatio.test/config', {
+  return new Promise((resolve, reject) => axios.get('http://api.myff.store/config', {
     params: {
       fqdn: req.headers.host
     }
