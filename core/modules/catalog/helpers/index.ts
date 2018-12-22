@@ -29,6 +29,7 @@ function _filterRootProductByStockitem (context, stockItem, product, errorCallba
 
 export function isOptionAvailableAsync (context, { product, configuration }) {
   const variant = findConfigurableChildAsync({ product: product, configuration: configuration, availabilityCheck: true })
+  console.debug('Variant:', variant)
   return typeof variant !== 'undefined' && variant !== null
 }
 
@@ -352,6 +353,7 @@ function _internalMapOptions (productOption) {
 }
 
 export function populateProductConfigurationAsync (context, { product, selectedVariant }) {
+  console.debug('Selected Variant', selectedVariant)
   if (product.configurable_options) {
     for (let option of product.configurable_options) {
       let attribute_code
@@ -385,12 +387,12 @@ export function populateProductConfigurationAsync (context, { product, selectedV
           value: selectedVariant[attribute_code]
         }
       }
+      console.debug('Selected option', selectedOption)
       const selectedOptionMeta = option.values.find(ov => { return ov.value_index === selectedOption.value })
       if (selectedOptionMeta) {
         selectedOption.label = selectedOptionMeta.label ? selectedOptionMeta.label : selectedOptionMeta.default_label
         selectedOption.value_data = selectedOptionMeta.value_data
       }
-
       const confVal = {
         attribute_code: attribute_code,
         id: selectedOption.value,

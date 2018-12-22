@@ -68,7 +68,7 @@
                     </span>
                   </div>
                   <div class="row top-xs m0 pt15 pb40 variants-wrapper">
-                    <div v-if="option.label == 'Color'">
+                    <div v-if="option.label == 'FColor'">
                       <color-selector
                         v-for="(c, i) in options[option.attribute_code]"
                         v-if="isOptionAvailable(c)"
@@ -80,7 +80,7 @@
                         :class="{ active: c.id == configuration[option.attribute_code].id }"
                       />
                     </div>
-                    <div class="sizes" v-else-if="option.label == 'Size'">
+                    <div class="sizes" v-else-if="option.label == 'FSize'">
                       <size-selector
                         v-for="(s, i) in options[option.attribute_code]"
                         v-if="isOptionAvailable(s)"

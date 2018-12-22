@@ -3,8 +3,8 @@
     <div class="bg-cl-secondary py35 pl20">
       <div class="container">
         <breadcrumbs
-          :routes="[{name: 'Homepage', route_link: '/'}]"
-          active-route="My Account"
+          :routes="[{name: $t('Homepage'), route_link: '/'}]"
+          :active-route="$t('My Account')"
         />
         <h1>
           {{ $t('My Account') }}
@@ -49,8 +49,8 @@ export default {
         { title: this.$t('My shipping details'), link: '/my-account/shipping-details' },
         { title: this.$t('My newsletter'), link: '/my-account/newsletter' },
         { title: this.$t('My orders'), link: '/my-account/orders' },
-        { title: this.$t('My loyalty card'), link: '#' },
-        { title: this.$t('My product reviews'), link: '#' },
+        // { title: this.$t('My loyalty card'), link: '#' },
+        // { title: this.$t('My product reviews'), link: '#' },
         { title: this.$t('My Recently viewed products'), link: '/my-account/recently-viewed' }
       ]
     }

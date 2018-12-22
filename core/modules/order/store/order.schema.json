@@ -78,9 +78,9 @@
                         }
                     }
                 },
-                "shipping_method_code": { "type": "string",  "pattern": "[a-zA-Z]+" },
-                "shipping_carrier_code": { "type": "string",  "pattern": "[a-zA-Z]+" },
-                "payment_method_code": { "type": "string",  "pattern": "[a-zA-Z]+" },
+                "shipping_method_code": { "pattern": "[a-zA-Z0-9]+" },
+                "shipping_carrier_code": { "pattern": "[a-zA-Z0-9]+" },
+                "payment_method_code": { "pattern": "[a-zA-Z0-9]+" },
                 "payment_method_additional": {}
             }
         }

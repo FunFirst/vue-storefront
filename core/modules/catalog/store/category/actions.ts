@@ -225,10 +225,12 @@ const actions: ActionTree<CategoryState, RootState> = {
             rootStore.dispatch('stock/list', { skus: chunkItem, skipCache }) // store it in the cache
           }
         }
+
+        console.debug('uniquerFilterValue ', populateAggregations, res.aggregations, filters)
         if (populateAggregations === true && res.aggregations) { // populate filter aggregates
           for (let attrToFilter of filters) { // fill out the filter options
             Vue.set(rootStore.state.category.filters.available, attrToFilter, [])
-
+            console.debug('uniquerFilterValue ', attrToFilter)
             let uniqueFilterValues = new Set<string>()
             if (attrToFilter !== 'price') {
               if (res.aggregations['agg_terms_' + attrToFilter]) {

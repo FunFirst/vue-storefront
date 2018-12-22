@@ -7,7 +7,7 @@
       <form @submit.prevent="submit(onSuccesfulSubmission)" novalidate>
         <div class="mb35">
           <p class="h4">
-            {{ $t('Sign up to our newsletter and receive a coupon for 10% off!') }}
+            {{ $store.state.config.newsletter.text || $t('Sign up to our newsletter and receive a coupon for 10% off!') }}
           </p>
           <base-input
             focus
